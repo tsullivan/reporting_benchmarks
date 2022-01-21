@@ -1,0 +1,22 @@
+metricbeat:
+  config.modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+  modules:
+  - module: kibana
+    metricsets: ["status"]
+    period: 10s
+    hosts: ["localhost:5601"]
+    enabled: true
+    username: "kibana_system"
+    password: "changeme"
+
+setup.template.settings:
+  index.number_of_shards: 1
+  index.codec: best_compression
+
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+  protocol: "http"
+  username: "elastic"
+  password: "changeme"
