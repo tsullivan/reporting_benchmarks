@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
       apt-get install -y libnss3 fonts-liberation libfontconfig1 docker.io
       apt-get install -y jq
       SHELL
-    ubuntu.vm.provision "shell", inline: "sh /vagrant/setup/bootstrap_vagrant.sh", env: {"VERSION" => ENV['VERSION']}
+    ubuntu.vm.provision "shell", inline: "sh /vagrant/setup/bootstrap.sh", env: {"VERSION" => ENV['VERSION']}
 
     # enable auto-sizing swap service
     # ubuntu.vm.provision "shell", inline: "sudo apt-get install swapspace -y"
