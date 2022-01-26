@@ -2,8 +2,8 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  # Start Kibana and go to localhost:5666 in your host's browser
-  config.vm.network :forwarded_port, guest: 5601, host: 5666
+  # Start Kibana and go to localhost:5777 in your host's browser
+  config.vm.network :forwarded_port, guest: 5601, host: 5777
 
   config.vm.provider "virtualbox" do |vbox|
     vbox.customize ["modifyvm", :id, "--audio", "none"]

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOST="http://localhost:5666"
+HOST="http://localhost:5601"
 AUTH="elastic:changeme"
 
 

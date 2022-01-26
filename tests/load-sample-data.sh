@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export TEST_KIBANA_URL=http://elastic:changeme@localhost:5666
+export TEST_KIBANA_URL=http://elastic:changeme@localhost:5777
 export TEST_ES_URL=http://elastic:changeme@localhost:9200
 
 ROOT=$HOME/elastic/kibana

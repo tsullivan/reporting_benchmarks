@@ -10,8 +10,10 @@ Benchmark comparisons include the number of panels in the dashboard.
 1. Run `yarn es snapshot` in the Kibana repo on the host machine. Note the snapshot version.
 2. Edit Vagrantfile to configure the memory size and number of CPUs
 3. Run `VERSION=8.1.0 vagrant up --provision`, matching the version with the ES snapshot instance.
-4. Run `vagrant ssh -c "/home/vagrant/setup-kibana.sh"`
-5. ((Start Kibana in the vagrant instance))
-6. Run `vagrant ssh -c "/home/vagrant/setup-metricbeat.sh"`
-7. Run the scripts to send report jobs to Kibana
-8. View Reporting performance results in Kibana Event Log
+4. Run `vagrant ssh -c "/home/vagrant/setup.sh"`
+5. Run `vagrant ssh` and start Kibana interactively in the vagrant machine. You can browse to it from the host at http://localhost:5777
+   - `cd kibana-8.1.0-SNAPSHOT`
+   - `./bin/kibana`
+6. Run `vagrant ssh -c "/vagrant/metricbeat/metricbeat.sh"` to start Metricbeat within the vagrant machine.
+7. Run the test scripts to send report jobs to Kibana.
+8. View Reporting performance results using event log data
