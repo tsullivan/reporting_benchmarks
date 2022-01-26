@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 
-HOST="http://localhost:5666/s/report-test"
+# Remember to set the cluster license to Trial
+
+HOST="http://localhost:5777/s/reporting-test-fixtures"
 AUTH="elastic:changeme"
 WIDTH=2500
 
