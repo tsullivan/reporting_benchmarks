@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
     ubuntu.vm.box_version = "20211026.0.0"
     ubuntu.vm.provision "shell", inline: <<-SHELL
       apt-get update
-      apt-get install -y libnss3 fonts-liberation libfontconfig1
+      apt-get install -y libnss3 fonts-liberation libfontconfig1 docker.io
       apt-get install -y jq
       SHELL
     ubuntu.vm.provision "shell", inline: "sh /vagrant/setup/bootstrap_vagrant.sh", env: {"VERSION" => ENV['VERSION']}

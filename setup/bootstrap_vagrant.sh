@@ -51,3 +51,7 @@ chmod a+x /home/vagrant/start.sh
 
 # Allow access to elasticsearch
 echo "10.0.2.2  elasticsearch" >> /etc/hosts
+echo "127.0.0.1  kibana" >> /etc/hosts
+
+groupadd -f docker
+usermod -aG docker vagrant
