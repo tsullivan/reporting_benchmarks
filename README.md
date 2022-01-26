@@ -15,5 +15,6 @@ Benchmark comparisons include the number of panels in the dashboard.
    - `cd kibana-8.1.0-SNAPSHOT`
    - `./bin/kibana`
 6. Run `vagrant ssh -c "/vagrant/metricbeat/metricbeat.sh"` to start Metricbeat within the vagrant machine.
+   - Run `vagrant ssh -c "docker logs -f metricbeat"` to watch the Metricbeat logs
 7. Run the test scripts to send report jobs to Kibana.
 8. View Reporting performance results using event log data

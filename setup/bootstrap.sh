@@ -1,6 +1,11 @@
 #!/bin/sh
 set -e
 
+if [ -z "$VERSION" ]; then
+  echo "Must provide VERSION in environment" 1>&2
+  exit 1
+fi
+
 MANIFEST=$(curl --silent -XGET https://artifacts-api.elastic.co/v1/versions/$VERSION-SNAPSHOT/builds)
 BUILD_HASH=$(echo $MANIFEST | jq -r '.builds[0]')
 KBN_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/kibana/kibana-$VERSION-SNAPSHOT-linux-x86_64.tar.gz
