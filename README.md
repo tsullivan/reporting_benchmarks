@@ -15,16 +15,7 @@ These steps show how to run a test environment based on 8.1.0, but it should wor
 
 1. Run `VERSION=8.1.0 vagrant up --provision`, matching the version with the ES snapshot instance.
 
-1. Run `vagrant ssh -c "/home/vagrant/setup.sh"`
-
-1. Run `vagrant ssh` and start Kibana interactively in the vagrant machine.
-   - In vagrant machine, run:
-     ```
-     cd kibana-8.1.0-SNAPSHOT
-     ./bin/kibana
-     ```
-   - You can browse to Kibana from the host at http://localhost:5777
-   - To watch the Kibana logs: `vagrant ssh -c "tail -f kibana-8.1.0-SNAPSHOT/logs/kibana.log"`
+1. Run `vagrant ssh -c "sudo systemctl start kibana"`
 
 1. Run `vagrant ssh -c "/vagrant/metricbeat/metricbeat.sh"` to start Metricbeat within the vagrant machine.
    - To watch the Metricbeat logs: `vagrant ssh -c "docker logs -f metricbeat"`
