@@ -9,9 +9,13 @@ fi
 MANIFEST=$(curl --silent -XGET https://artifacts-api.elastic.co/v1/versions/$VERSION-SNAPSHOT/builds)
 BUILD_HASH=$(echo $MANIFEST | jq -r '.builds[0]')
 KBN_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/kibana/kibana-$VERSION-SNAPSHOT-linux-x86_64.tar.gz
-MBT_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/beats/metricbeat/metricbeat-$VERSION-SNAPSHOT-docker-image-linux-amd64.tar.gz
+MBT_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/beats/metricbeat/metricbeat-$VERSION-SNAPSHOT-linux-x86_64.tar.gz
 
 echo "Bootstrapping for Kibana hash: ${BUILD_HASH}"
+
+# Set up network
+echo "10.0.2.2  elasticsearch" >> /etc/hosts
+echo "127.0.0.1  kibana" >> /etc/hosts
 
 cat << HELLO > /etc/profile.d/custom.sh
 echo
@@ -22,47 +26,38 @@ echo \# Latest Metricbeat snapshot URL: $MBT_DOWNLOAD_URL
 echo
 HELLO
 
-# Allow vagrant use to run docker
-groupadd -f docker
-usermod -aG docker vagrant
-
-cat << INSTALL > /home/vagrant/setup.sh
+cat << KBN_INSTALL > /home/vagrant/setup-kibana.sh
 set -o verbose
 cd /home/vagrant
 wget --progress=bar:force:noscroll $KBN_DOWNLOAD_URL
 tar xzf kibana-$VERSION-SNAPSHOT-linux-x86_64.tar.gz
-cd kibana-$VERSION-SNAPSHOT
+ln -s kibana-$VERSION-SNAPSHOT kibana-SNAPSHOT
+cd kibana-SNAPSHOT
 rm config/kibana.yml
 rm config/node.options
 cp -r /vagrant/setup/config/* ./config
+KBN_INSTALL
+
+cat << MBT_INSTALL > /home/vagrant/setup-metricbeat.sh
+set -o verbose
 cd /home/vagrant
 wget --progress=bar:force:noscroll $MBT_DOWNLOAD_URL
-cat metricbeat-$VERSION-SNAPSHOT-docker-image-linux-amd64.tar.gz | docker load
-INSTALL
-chmod a+x /home/vagrant/setup.sh
+tar xzf metricbeat-$VERSION-SNAPSHOT-linux-x86_64.tar.gz
+ln -s metricbeat-$VERSION-SNAPSHOT-linux-x86_64 metricbeat-SNAPSHOT
+cp /vagrant/metricbeat/metricbeat.yml metricbeat-SNAPSHOT
+(cd metricbeat-SNAPSHOT ; ./metricbeat modules enable linux system)
+chown root metricbeat-SNAPSHOT/metricbeat.yml
+chown root metricbeat-SNAPSHOT/modules.d/system.yml
+MBT_INSTALL
+chmod a+x /home/vagrant/setup-kibana.sh
+chmod a+x /home/vagrant/setup-metricbeat.sh
 
-# install as normal user
-sudo -u vagrant /home/vagrant/setup.sh
+sudo -u vagrant /home/vagrant/setup-kibana.sh # install kibana as normal user
+/home/vagrant/setup-metricbeat.sh # install metricbeat as root
 
 # set up systemd service
-cat << SERVICE > /etc/systemd/system/kibana.service
-[Unit]
-Description=Kibana
-After=network.target
-
-[Service]
-ExecStart=/home/vagrant/kibana-$VERSION-SNAPSHOT/bin/kibana
-Type=simple
-User=vagrant
-PIDFile=/run/kibana.pid
-Restart=always
-
-[Install]
-WantedBy=default.target
-SERVICE
+cp /vagrant/setup/kibana.service /etc/systemd/system/kibana.service
+# cp /vagrant/setup/metricbeat.service /etc/systemd/system/metricbeat.service
 
 /bin/systemctl daemon-reload
-
-# Set up network
-echo "10.0.2.2  elasticsearch" >> /etc/hosts
-echo "127.0.0.1  kibana" >> /etc/hosts
+/bin/systemctl start kibana
