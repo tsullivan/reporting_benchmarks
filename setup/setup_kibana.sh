@@ -2,6 +2,8 @@
 
 set -o verbose
 
+cd $(dirname "$0")
+
 export TEST_KIBANA_URL=http://elastic:changeme@localhost:5777
 export TEST_ES_URL=http://elastic:changeme@localhost:9200
 
