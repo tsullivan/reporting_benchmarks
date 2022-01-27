@@ -1,7 +1,0 @@
-cluster.name: "esvagrant"
-bootstrap.memory_lock: true
-xpack.watcher.enabled: false
-xpack.monitoring.enabled: false
-
-xpack.license.self_generated.type: trial
-xpack.security.enabled: true
