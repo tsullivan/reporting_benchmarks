@@ -1,4 +1,4 @@
-# png_benchmarks
+# Reporting performance test environment setup
 
 Test setup for benchmarking Dashboard PNG performance.
 
