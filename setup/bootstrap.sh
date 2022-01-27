@@ -13,16 +13,16 @@ MBT_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/beats/metric
 
 echo "Bootstrapping for Kibana hash: ${BUILD_HASH}"
 
-cat << SCRIPT > /etc/profile.d/custom.sh
+cat << HELLO > /etc/profile.d/custom.sh
 echo
 echo \# Latest build: $BUILD_HASH
 echo \# Manifest updated: $(echo $MANIFEST | jq -r '.manifests["last-update-time"]')
 echo \# Latest Kibana snapshot URL: $KBN_DOWNLOAD_URL
 echo \# Latest Metricbeat snapshot URL: $ME
 echo
-SCRIPT
+HELLO
 
-cat << SCRIPT > /home/vagrant/setup.sh
+cat << INSTALL > /home/vagrant/setup.sh
 set -o verbose
 cd /home/vagrant
 wget --progress=bar:force:noscroll $KBN_DOWNLOAD_URL
@@ -31,13 +31,30 @@ cd kibana-$VERSION-SNAPSHOT
 rm config/kibana.yml
 rm config/node.options
 cp -r /vagrant/setup/config/* ./config
-
 cd /home/vagrant
 wget --progress=bar:force:noscroll $MBT_DOWNLOAD_URL
 cat metricbeat-$VERSION-SNAPSHOT-docker-image-linux-amd64.tar.gz | docker load
-SCRIPT
-
+INSTALL
 chmod a+x /home/vagrant/setup.sh
+sudo -u vagrant /home/vagrant/setup.sh
+
+cat << SERVICE > /etc/systemd/system/kibana.service
+[Unit]
+Description=Kibana
+After=network.target
+
+[Service]
+ExecStart=/home/vagrant/kibana-$VERSION-SNAPSHOT/bin/kibana
+Type=simple
+User=vagrant
+PIDFile=/run/kibana.pid
+Restart=always
+
+[Install]
+WantedBy=default.target
+SERVICE
+
+/bin/systemctl daemon-reload
 
 # Set up network
 echo "10.0.2.2  elasticsearch" >> /etc/hosts
