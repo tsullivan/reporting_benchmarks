@@ -29,7 +29,7 @@ These steps show how to run a test environment based on 8.1.0, but it should wor
 1. Run `vagrant ssh -c "/vagrant/metricbeat/metricbeat.sh"` to start Metricbeat within the vagrant machine.
    - To watch the Metricbeat logs: `vagrant ssh -c "docker logs -f metricbeat"`
 
-1. Run `./setup/setup_kibana.sh` in this repo to install the test saved objects and datasets
+1. Run `cd setup && ./setup_kibana.sh` in this repo to install the test saved objects and datasets
 
 1. Run `./tests/run_tests.sh` to send a batch of report jobs to Kibana.
 
