@@ -25,9 +25,9 @@ curl $TEST_KIBANA_URL/api/spaces/space \
 echo
 
 curl -XPOST $TEST_KIBANA_URL/s/reporting-test-fixtures/api/saved_objects/_import?createNewCopies=false \
-  -H "$XSRF" --form file=@archives/sample_dataoids.ndjson
+  -H "$XSRF" --form file=@archives/sample_data.ndjson
 echo
 
 ROOT=$HOME/elastic/kibana
 CONFIG="--config $ROOT/x-pack/test/functional/config.js"
-node $ROOT/scripts/es_archiver $CONFIG load archives/sample_dataoids
+node $ROOT/scripts/es_archiver $CONFIG load archives/sample_data
