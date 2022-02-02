@@ -6,9 +6,12 @@ if [ -z "$VERSION" ]; then
   exit 1
 fi
 
+VCONFIG=/vagrant/setup/config
+VHOME=/home/vagrant
+
 MANIFEST=$(curl --silent -XGET https://artifacts-api.elastic.co/v1/versions/$VERSION-SNAPSHOT/builds)
 BUILD_HASH=$(echo $MANIFEST | jq -r '.builds[0]')
-KBN_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/kibana/kibana-$VERSION-SNAPSHOT-linux-x86_64.tar.gz
+KBN_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/kibana/kibana-$VERSION-SNAPSHOT-amd64.deb
 MBT_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/beats/metricbeat/metricbeat-$VERSION-SNAPSHOT-amd64.deb
 
 echo "Bootstrapping for Kibana hash: ${BUILD_HASH}"
@@ -26,27 +29,34 @@ echo \# Latest Metricbeat snapshot URL: $MBT_DOWNLOAD_URL
 echo
 HELLO
 
-cat << KBN_INSTALL > /home/vagrant/setup-kibana.sh
+cat << KBN_INSTALL > $VHOME/setup-kibana.sh
 set -o verbose
-cd /home/vagrant
+cd $VHOME
+mkdir $BUILD_HASH ; cd $BUILD_HASH
 wget --progress=bar:force:noscroll $KBN_DOWNLOAD_URL
-tar xzf kibana-$VERSION-SNAPSHOT-linux-x86_64.tar.gz
-ln -s kibana-$VERSION-SNAPSHOT kibana-SNAPSHOT
-cd kibana-SNAPSHOT
-rm config/kibana.yml
-rm config/node.options
-cp -r /vagrant/setup/config/* ./config
+dpkg -i kibana-$VERSION-SNAPSHOT-amd64.deb
+cp $VCONFIG/kibana.yml /etc/kibana
+cp $VCONFIG/node.options /etc/kibana
 KBN_INSTALL
-sudo -u vagrant /home/vagrant/setup-kibana.sh # install kibana as normal user
 
-# set up systemd services
-cp /vagrant/setup/kibana.service /etc/systemd/system/kibana.service
+cat << MBT_INSTALL > $VHOME/setup-metricbeat.sh
+set -o verbose
+cd $VHOME
+mkdir $BUILD_HASH ; cd $BUILD_HASH
+wget --progress=bar:force:noscroll $MBT_DOWNLOAD_URL
+dpkg -i metricbeat-$VERSION-SNAPSHOT-amd64.deb
+cp $VCONFIG/metricbeat.yml /etc/metricbeat/
+MBT_INSTALL
+
+chmod a+x $VHOME/setup-kibana.sh
+chmod a+x $VHOME/setup-metricbeat.sh
+
+$VHOME/setup-kibana.sh
+$VHOME/setup-metricbeat.sh
 
 /bin/systemctl daemon-reload
-/bin/systemctl start kibana
+/bin/systemctl enable kibana.service
+/bin/systemctl enable metricbeat.service
 
-cat << MBT_INSTALL > /home/vagrant/setup-metricbeat.sh
-set -o verbose
-cd /home/vagrant
-wget --progress=bar:force:noscroll $MBT_DOWNLOAD_URL
-MBT_INSTALL
+/bin/systemctl start kibana.service
+/bin/systemctl start metricbeat.service
