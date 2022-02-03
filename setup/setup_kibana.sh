@@ -28,11 +28,10 @@ curl -XPOST $TEST_KIBANA_URL/s/reporting-test-fixtures/api/saved_objects/_import
   -H "$XSRF" --form file=@archives/sample_data.ndjson
 echo
 
+curl -XPOST $TEST_KIBANA_URL/s/reporting-monitoring/api/saved_objects/_import?createNewCopies=false \
+  -H "$XSRF" --form file=@archives/reporting_monitoring_dashboard.ndjson
+echo
+
 ROOT=$HOME/elastic/kibana
 CONFIG="--config $ROOT/x-pack/test/functional/config.js"
 node $ROOT/scripts/es_archiver $CONFIG load archives/sample_data
-
-curl $TEST_KIBANA_URL/s/reporting-monitoring/api/saved_objects/index-pattern/kibana-system-event-log \
-  -H "$CONTENT_TYPE" -H "$XSRF" \
-  --data-raw '{"attributes":{"fieldAttrs":"{}","title":".kibana-event-log*","timeFieldName":"@timestamp","fields":"[]","typeMeta":"{}","runtimeFieldMap":"{}"}}'
-echo
