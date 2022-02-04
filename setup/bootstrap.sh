@@ -11,10 +11,17 @@ VHOME=/home/vagrant
 
 MANIFEST=$(curl --silent -XGET https://artifacts-api.elastic.co/v1/versions/$VERSION-SNAPSHOT/builds)
 BUILD_HASH=$(echo $MANIFEST | jq -r '.builds[0]')
+
+if [ -z "$BUILD_HASH" ] || [ "$BUILD_HASH" = "null" ]; then
+  echo "BUILD_HASH could not be retrieved!" 1>&2
+  exit 1
+fi
+
+echo "Bootstrapping for Kibana hash: ${BUILD_HASH}"
+
 KBN_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/kibana/kibana-$VERSION-SNAPSHOT-amd64.deb
 MBT_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/beats/metricbeat/metricbeat-$VERSION-SNAPSHOT-amd64.deb
 
-echo "Bootstrapping for Kibana hash: ${BUILD_HASH}"
 
 # Set up network
 echo "10.0.2.2  elasticsearch" >> /etc/hosts
