@@ -4,8 +4,15 @@ set -o verbose
 
 cd $(dirname "$0")
 
-export TEST_KIBANA_URL=http://elastic:changeme@localhost:5777
-export TEST_ES_URL=http://elastic:changeme@localhost:9200
+if [ -z "$TEST_KIBANA_URL" ]
+then
+  export TEST_KIBANA_URL=http://elastic:changeme@localhost:5777
+fi
+
+if [ -z "$TEST_ES_URL" ]
+then
+  export TEST_ES_URL=http://elastic:changeme@localhost:9200
+fi
 
 XSRF="kbn-xsrf: great-software"
 CONTENT_TYPE="Content-Type: application/json"

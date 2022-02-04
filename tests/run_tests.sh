@@ -1,9 +1,10 @@
 #!/usr/bin/bash
 
-# Remember to set the cluster license to Trial
+if [ -z "$TEST_KIBANA_URL" ]
+then
+  TEST_KIBANA_URL=http://elastic:changeme@localhost:5777
+fi
 
-HOST="http://localhost:5777/s/reporting-test-fixtures"
-AUTH="elastic:changeme"
 WIDTH=2500
 
 DASHBOARD_IDS=(
@@ -31,9 +32,8 @@ function dashboardPngTests() {
     TITLE="Dashboard_PNG_Test_$i"
     echo $TITLE $ID
     curl --silent \
-     -XPOST "${HOST}/api/reporting/generate/pngV2?jobParams=(layout%3A(dimensions%3A(height%3A10%2Cwidth%3A${WIDTH})%2Cid%3Apreserve_layout)%2ClocatorParams%3A(id%3ADASHBOARD_APP_LOCATOR%2Cparams%3A(dashboardId%3A%27${ID}%27%2CpreserveSavedFilters%3A!t%2CuseHash%3A!f%2CviewMode%3Aview)%2Cversion%3A%278.1.0-SNAPSHOT%27)%2CobjectType%3Adashboard%2Ctitle%3A%27${TITLE}%27%2Cversion%3A%278.1.0-SNAPSHOT%27)" \
-     -H "kbn-xsrf: reporting" \
-     -u ${AUTH}
+     -XPOST "${TEST_KIBANA_URL}/api/reporting/generate/pngV2?jobParams=(layout%3A(dimensions%3A(height%3A10%2Cwidth%3A${WIDTH})%2Cid%3Apreserve_layout)%2ClocatorParams%3A(id%3ADASHBOARD_APP_LOCATOR%2Cparams%3A(dashboardId%3A%27${ID}%27%2CpreserveSavedFilters%3A!t%2CuseHash%3A!f%2CviewMode%3Aview)%2Cversion%3A%278.1.0-SNAPSHOT%27)%2CobjectType%3Adashboard%2Ctitle%3A%27${TITLE}%27%2Cversion%3A%278.1.0-SNAPSHOT%27)" \
+     -H "kbn-xsrf: reporting"
   done
 }
 dashboardPngTests
@@ -86,9 +86,8 @@ function canvasPdfTests() {
 
     # All are just 1 page
     curl --silent \
-     -XPOST "${HOST}/api/reporting/generate/printablePdfV2?jobParams=%28browserTimezone%3AAmerica%2FPhoenix%2Clayout%3A%28dimensions%3A%28height%3A720%2Cwidth%3A1280%29%2Cid%3Acanvas%29%2ClocatorParams%3A%21%28%28id%3ACANVAS_APP_LOCATOR%2Cparams%3A%28id%3Aworkpad-${ID}%2Cpage%3A1%2Cview%3AworkpadPDF%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%29%2CobjectType%3A%27canvas%20workpad%27%2Ctitle%3A%27${TITLE}%27%2Cversion%3A%278.1.0-SNAPSHOT%27%29" \
-     -H "kbn-xsrf: reporting" \
-     -u ${AUTH}
+     -XPOST "${TEST_KIBANA_URL}/api/reporting/generate/printablePdfV2?jobParams=%28browserTimezone%3AAmerica%2FPhoenix%2Clayout%3A%28dimensions%3A%28height%3A720%2Cwidth%3A1280%29%2Cid%3Acanvas%29%2ClocatorParams%3A%21%28%28id%3ACANVAS_APP_LOCATOR%2Cparams%3A%28id%3Aworkpad-${ID}%2Cpage%3A1%2Cview%3AworkpadPDF%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%29%2CobjectType%3A%27canvas%20workpad%27%2Ctitle%3A%27${TITLE}%27%2Cversion%3A%278.1.0-SNAPSHOT%27%29" \
+     -H "kbn-xsrf: reporting"
   done
 }
 canvasPdfTests
@@ -105,8 +104,7 @@ function canvasPdfTests2() {
 
   # All are just 1 page
   curl --silent \
-   -XPOST "${HOST}/api/reporting/generate/printablePdfV2?jobParams=%28browserTimezone%3AAmerica%2FPhoenix%2Clayout%3A%28dimensions%3A%28height%3A720%2Cwidth%3A1080%29%2Cid%3Acanvas%29%2ClocatorParams%3A%21%28%28id%3ACANVAS_APP_LOCATOR%2Cparams%3A%28id%3Aworkpad-${ID}%2Cpage%3A1%2Cview%3AworkpadPDF%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%2C%28id%3ACANVAS_APP_LOCATOR%2Cparams%3A%28id%3Aworkpad-${ID}%2Cpage%3A2%2Cview%3AworkpadPDF%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%29%2CobjectType%3A%27canvas%20workpad%27%2Ctitle%3A%27${TITLE}%27%2Cversion%3A%278.1.0-SNAPSHOT%27%29" \
-   -H "kbn-xsrf: reporting" \
-   -u ${AUTH}
+   -XPOST "${TEST_KIBANA_URL}/api/reporting/generate/printablePdfV2?jobParams=%28browserTimezone%3AAmerica%2FPhoenix%2Clayout%3A%28dimensions%3A%28height%3A720%2Cwidth%3A1080%29%2Cid%3Acanvas%29%2ClocatorParams%3A%21%28%28id%3ACANVAS_APP_LOCATOR%2Cparams%3A%28id%3Aworkpad-${ID}%2Cpage%3A1%2Cview%3AworkpadPDF%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%2C%28id%3ACANVAS_APP_LOCATOR%2Cparams%3A%28id%3Aworkpad-${ID}%2Cpage%3A2%2Cview%3AworkpadPDF%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%29%2CobjectType%3A%27canvas%20workpad%27%2Ctitle%3A%27${TITLE}%27%2Cversion%3A%278.1.0-SNAPSHOT%27%29" \
+   -H "kbn-xsrf: reporting"
 }
 canvasPdfTests2
