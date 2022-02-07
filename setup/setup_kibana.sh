@@ -39,7 +39,6 @@ curl -XPOST $TEST_KIBANA_URL/s/reporting-monitoring/api/saved_objects/_import?cr
   -H "$XSRF" --form file=@archives/reporting_monitoring_dashboard.ndjson
 echo
 
-# FIXME: kibana should just be a sibling directory of this repo
-ROOT=$HOME/elastic/kibana
+ROOT=../../kibana
 CONFIG="--config $ROOT/x-pack/test/functional/config.js"
 node $ROOT/scripts/es_archiver $CONFIG load archives/sample_data
