@@ -14,8 +14,10 @@ metricbeat:
 setup.template.settings:
   index.number_of_shards: 1
   index.codec: best_compression
+
 setup.kibana:
   host: "localhost:5601"
+
 output.elasticsearch:
   hosts: ["elasticsearch:9200"]
   protocol: "http"

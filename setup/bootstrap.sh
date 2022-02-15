@@ -21,6 +21,7 @@ echo "Bootstrapping for Kibana hash: ${BUILD_HASH}"
 
 KBN_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/kibana/kibana-$VERSION-SNAPSHOT-amd64.deb
 MBT_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/beats/metricbeat/metricbeat-$VERSION-SNAPSHOT-amd64.deb
+JBT_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/beats/journalbeat/journalbeat-$VERSION-SNAPSHOT-amd64.deb
 
 
 # Set up network
@@ -33,6 +34,7 @@ echo \# Latest build: $BUILD_HASH
 echo \# Manifest updated: $(echo $MANIFEST | jq -r '.manifests["last-update-time"]')
 echo \# Latest Kibana snapshot URL: $KBN_DOWNLOAD_URL
 echo \# Latest Metricbeat snapshot URL: $MBT_DOWNLOAD_URL
+echo \# Latest Journalbeat snapshot URL: $JBT_DOWNLOAD_URL
 echo
 HELLO
 
