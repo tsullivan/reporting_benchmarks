@@ -1,0 +1,32 @@
+filebeat.inputs:
+  - type: filestream
+    paths:
+      - /var/log/kibana.log
+    parsers:
+      - ndjson:
+          keys_under_root: true
+          overwrite_keys: true
+          add_error_key: true
+          message_key: message
+
+setup.template.settings:
+  index.number_of_shards: 1
+  index.codec: best_compression
+
+setup.template.append_fields:
+  - name: kibana.reporting.byteSize
+    type: long
+  - name: kibana.reporting.jobType
+    type: keyword
+  - name: kibana.reporting.actionType
+    type: keyword
+  - name: kibana.reporting.id
+    type: keyword
+  - name: kibana.task.id
+    type: keyword
+
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+  protocol: "http"
+  username: "elastic"
+  password: "changeme"

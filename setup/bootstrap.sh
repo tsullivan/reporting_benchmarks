@@ -20,6 +20,7 @@ fi
 echo "Bootstrapping for Kibana hash: ${BUILD_HASH}"
 
 KBN_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/kibana/kibana-$VERSION-SNAPSHOT-linux-x86_64.tar.gz
+FBT_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/beats/filebeat/filebeat-$VERSION-SNAPSHOT-amd64.deb
 MBT_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/beats/metricbeat/metricbeat-$VERSION-SNAPSHOT-amd64.deb
 
 
@@ -33,6 +34,7 @@ echo \# Latest build: $BUILD_HASH
 echo \# Manifest updated: $(echo $MANIFEST | jq -r '.manifests["last-update-time"]')
 echo \# Latest Kibana snapshot URL: $KBN_DOWNLOAD_URL
 echo \# Latest Metricbeat snapshot URL: $MBT_DOWNLOAD_URL
+echo \# Latest Filebeat snapshot URL: $FBT_DOWNLOAD_URL
 echo
 HELLO
 
@@ -43,24 +45,29 @@ mkdir $BUILD_HASH ; cd $BUILD_HASH
 wget --progress=bar:force:noscroll $KBN_DOWNLOAD_URL
 KBN_DOWNLOAD
 
-cat << MBT_INSTALL > $VHOME/setup-metricbeat.sh
+cat << BEATS_INSTALL > $VHOME/setup-beats.sh
 set -o verbose
 cd $VHOME
 mkdir $BUILD_HASH ; cd $BUILD_HASH
 wget --progress=bar:force:noscroll $MBT_DOWNLOAD_URL
+wget --progress=bar:force:noscroll $FBT_DOWNLOAD_URL
 dpkg -i metricbeat-$VERSION-SNAPSHOT-amd64.deb
+dpkg -i filebeat-$VERSION-SNAPSHOT-amd64.deb
 cp $VCONFIG/metricbeat.yml /etc/metricbeat/
-MBT_INSTALL
+cp $VCONFIG/filebeat.yml /etc/filebeat/
+BEATS_INSTALL
 
 chmod a+x $VHOME/setup-kibana.sh
-chmod a+x $VHOME/setup-metricbeat.sh
+chmod a+x $VHOME/setup-beats.sh
 
 $VHOME/setup-kibana.sh
-$VHOME/setup-metricbeat.sh
+$VHOME/setup-beats.sh
 
 /bin/systemctl daemon-reload
-/bin/systemctl enable kibana.service
 /bin/systemctl enable metricbeat.service
-
-/bin/systemctl start kibana.service
+/bin/systemctl enable filebeat.service
 /bin/systemctl start metricbeat.service
+/bin/systemctl start filebeat.service
+
+touch /var/log/kibana.log
+chown vagrant:vagrant /var/log/kibana.log
