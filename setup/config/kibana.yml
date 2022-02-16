@@ -20,7 +20,7 @@ logging:
     type: file
     fileName: /var/log/kibana.log
     layout.type: json
-  root.appenders: [file]
+  root.appenders: [console,file]
   loggers:
     - name: plugins.screenshotting
       level: debug

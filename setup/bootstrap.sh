@@ -37,10 +37,6 @@ echo \# Latest Filebeat snapshot URL: $FBT_DOWNLOAD_URL
 echo
 HELLO
 
-touch /var/log/kibana.log
-chown vagrant:vagrant /var/log/kibana.log
-
-
 cat << STACK > $VHOME/install.sh
 #!/bin/sh
 set -o verbose
@@ -73,3 +69,6 @@ STACK
 
 chmod a+x $VHOME/install.sh
 $VHOME/install.sh
+
+touch /var/log/kibana.log
+chown kibana:kibana /var/log/kibana.log
