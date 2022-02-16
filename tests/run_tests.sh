@@ -85,7 +85,16 @@ function csvTests1() {
 ### Run tests
 ###
 
-dashboardPdfTests1
 dashboardPngTests1
-canvasPdfTests1
-csvTests1
+dashboardPngTests1
+dashboardPngTests1
+dashboardPngTests1
+dashboardPngTests1
+dashboardPngTests1
+dashboardPngTests1
+dashboardPngTests1
+dashboardPngTests1
+dashboardPngTests1
+# dashboardPdfTests1
+# canvasPdfTests1
+# csvTests1
