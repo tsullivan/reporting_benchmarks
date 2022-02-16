@@ -38,21 +38,21 @@ echo \# Latest Filebeat snapshot URL: $FBT_DOWNLOAD_URL
 echo
 HELLO
 
+cd $VHOME
+mkdir $VHOME/$BUILD_HASH
+
 cat << KBN_DOWNLOAD > $VHOME/setup-kibana.sh
 set -o verbose
-cd $VHOME
-mkdir $BUILD_HASH ; cd $BUILD_HASH
-wget --progress=bar:force:noscroll $KBN_DOWNLOAD_URL
+wget --progress=bar:force:noscroll $KBN_DOWNLOAD_URL -P $BUILD_HASH
 KBN_DOWNLOAD
 
 cat << BEATS_INSTALL > $VHOME/setup-beats.sh
 set -o verbose
-cd $VHOME
-mkdir $BUILD_HASH ; cd $BUILD_HASH
-wget --progress=bar:force:noscroll $MBT_DOWNLOAD_URL
-wget --progress=bar:force:noscroll $FBT_DOWNLOAD_URL
-dpkg -i metricbeat-$VERSION-SNAPSHOT-amd64.deb
-dpkg -i filebeat-$VERSION-SNAPSHOT-amd64.deb
+cd $VHOHME/$BUILD_HASH
+wget --progress=bar:force:noscroll $MBT_DOWNLOAD_URL -P $BUILD_HASH
+wget --progress=bar:force:noscroll $FBT_DOWNLOAD_URL -P $BUILD_HASH
+dpkg -i $BUILD_HASH/metricbeat-$VERSION-SNAPSHOT-amd64.deb
+dpkg -i $BUILD_HASH/filebeat-$VERSION-SNAPSHOT-amd64.deb
 cp $VCONFIG/metricbeat.yml /etc/metricbeat/
 cp $VCONFIG/filebeat.yml /etc/filebeat/
 BEATS_INSTALL
@@ -71,3 +71,4 @@ $VHOME/setup-beats.sh
 
 touch /var/log/kibana.log
 chown vagrant:vagrant /var/log/kibana.log
+chown vagrant:vagrant $VHOME/$BUILD_HASH
