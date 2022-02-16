@@ -19,10 +19,9 @@ fi
 
 echo "Bootstrapping for Kibana hash: ${BUILD_HASH}"
 
-KBN_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/kibana/kibana-$VERSION-SNAPSHOT-linux-x86_64.tar.gz
+KBN_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/kibana/kibana-$VERSION-SNAPSHOT-amd64.deb
 FBT_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/beats/filebeat/filebeat-$VERSION-SNAPSHOT-amd64.deb
 MBT_DOWNLOAD_URL=https://snapshots.elastic.co/$BUILD_HASH/downloads/beats/metricbeat/metricbeat-$VERSION-SNAPSHOT-amd64.deb
-
 
 # Set up network
 echo "10.0.2.2  elasticsearch" >> /etc/hosts
@@ -38,37 +37,39 @@ echo \# Latest Filebeat snapshot URL: $FBT_DOWNLOAD_URL
 echo
 HELLO
 
-cd $VHOME
+touch /var/log/kibana.log
+chown vagrant:vagrant /var/log/kibana.log
+
+
+cat << STACK > $VHOME/install.sh
+#!/bin/sh
+set -o verbose
+
 mkdir $VHOME/$BUILD_HASH
+chown vagrant:vagrant $VHOME/$BUILD_HASH
 
-cat << KBN_DOWNLOAD > $VHOME/setup-kibana.sh
-set -o verbose
-wget --progress=bar:force:noscroll $KBN_DOWNLOAD_URL -P $BUILD_HASH
-KBN_DOWNLOAD
+wget --progress=bar:force:noscroll \
+  $MBT_DOWNLOAD_URL \
+  $FBT_DOWNLOAD_URL \
+  $KBN_DOWNLOAD_URL \
+  -P $BUILD_HASH
 
-cat << BEATS_INSTALL > $VHOME/setup-beats.sh
-set -o verbose
-cd $VHOHME/$BUILD_HASH
-wget --progress=bar:force:noscroll $MBT_DOWNLOAD_URL -P $BUILD_HASH
-wget --progress=bar:force:noscroll $FBT_DOWNLOAD_URL -P $BUILD_HASH
 dpkg -i $BUILD_HASH/metricbeat-$VERSION-SNAPSHOT-amd64.deb
 dpkg -i $BUILD_HASH/filebeat-$VERSION-SNAPSHOT-amd64.deb
+dpkg -i $BUILD_HASH/kibana-$VERSION-SNAPSHOT-amd64.deb
+
 cp $VCONFIG/metricbeat.yml /etc/metricbeat/
 cp $VCONFIG/filebeat.yml /etc/filebeat/
-BEATS_INSTALL
-
-chmod a+x $VHOME/setup-kibana.sh
-chmod a+x $VHOME/setup-beats.sh
-
-$VHOME/setup-kibana.sh
-$VHOME/setup-beats.sh
+cp $VCONFIG/kibana.yml /etc/kibana/
 
 /bin/systemctl daemon-reload
 /bin/systemctl enable metricbeat.service
 /bin/systemctl enable filebeat.service
+/bin/systemctl enable kibana.service
 /bin/systemctl start metricbeat.service
 /bin/systemctl start filebeat.service
+/bin/systemctl start kibana.service
+STACK
 
-touch /var/log/kibana.log
-chown vagrant:vagrant /var/log/kibana.log
-chown vagrant:vagrant $VHOME/$BUILD_HASH
+chmod a+x $VHOME/install.sh
+$VHOME/install.sh
