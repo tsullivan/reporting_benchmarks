@@ -14,6 +14,12 @@ DASHBOARD_PARAMS_PDF=(
   %28browserTimezone%3AUTC%2Clayout%3A%28dimensions%3A%28height%3A2360%2Cwidth%3A3056%29%2Cid%3Apreserve_layout%29%2ClocatorParams%3A%21%28%28id%3ADASHBOARD_APP_LOCATOR%2Cparams%3A%28dashboardId%3Aedf84fe0-e1a0-11e7-b6d5-4dc382ef7f5b%2CpreserveSavedFilters%3A%21t%2CtimeRange%3A%28from%3A%272022-01-13T23%3A00%3A00.000Z%27%2Cto%3A%272022-01-20T23%3A00%3A00.000Z%27%29%2CuseHash%3A%21f%2CviewMode%3Aview%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%29%2CobjectType%3Adashboard%2Ctitle%3A%27%5BLogs%5D%20Web%20Traffic%27%2Cversion%3A%278.1.0-SNAPSHOT%27%29
   %28browserTimezone%3AUTC%2Clayout%3A%28dimensions%3A%28height%3A2052%2Cwidth%3A3056%29%2Cid%3Apreserve_layout%29%2ClocatorParams%3A%21%28%28id%3ADASHBOARD_APP_LOCATOR%2Cparams%3A%28dashboardId%3A%27722b74f0-b882-11e8-a6d9-e546fe2bba5f%27%2CpreserveSavedFilters%3A%21t%2CtimeRange%3A%28from%3A%272022-01-13T19%3A00%3A00.000Z%27%2Cto%3A%272022-01-20T19%3A00%3A00.000Z%27%29%2CuseHash%3A%21f%2CviewMode%3Aview%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%29%2CobjectType%3Adashboard%2Ctitle%3A%27%5BeCommerce%5D%20Revenue%20Dashboard%27%2Cversion%3A%278.1.0-SNAPSHOT%27%29
 )
+DASHBOARD_PARAMS_PRINT=(
+  %28browserTimezone%3AUTC%2Clayout%3A%28dimensions%3A%28height%3A2331.990966796875%2Cwidth%3A2320%29%2Cid%3Aprint%29%2ClocatorParams%3A%21%28%28id%3ADASHBOARD_APP_LOCATOR%2Cparams%3A%28dashboardId%3A%277adfa750-4c81-11e8-b3d7-01146121b73d%27%2CpreserveSavedFilters%3A%21t%2CtimeRange%3A%28from%3A%272022-01-13T22%3A00%3A00.000Z%27%2Cto%3A%272022-01-21T01%3A00%3A00.000Z%27%29%2CuseHash%3A%21f%2CviewMode%3Aview%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%29%2CobjectType%3Adashboard%2Ctitle%3A%27%5BFlights%5D%20Global%20Flight%20Dashboard%27%2Cversion%3A%278.1.0-SNAPSHOT%27%29
+  %28browserTimezone%3AUTC%2Clayout%3A%28dimensions%3A%28height%3A2359.988525390625%2Cwidth%3A2320%29%2Cid%3Aprint%29%2ClocatorParams%3A%21%28%28id%3ADASHBOARD_APP_LOCATOR%2Cparams%3A%28dashboardId%3Aedf84fe0-e1a0-11e7-b6d5-4dc382ef7f5b%2CpreserveSavedFilters%3A%21t%2CtimeRange%3A%28from%3A%272022-01-13T23%3A00%3A00.000Z%27%2Cto%3A%272022-01-20T23%3A00%3A00.000Z%27%29%2CuseHash%3A%21f%2CviewMode%3Aview%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%29%2CobjectType%3Adashboard%2Ctitle%3A%27%5BLogs%5D%20Web%20Traffic%27%2Cversion%3A%278.1.0-SNAPSHOT%27%29
+  %28browserTimezone%3AUTC%2Clayout%3A%28dimensions%3A%28height%3A2051.99072265625%2Cwidth%3A2320%29%2Cid%3Aprint%29%2ClocatorParams%3A%21%28%28id%3ADASHBOARD_APP_LOCATOR%2Cparams%3A%28dashboardId%3A%27722b74f0-b882-11e8-a6d9-e546fe2bba5f%27%2CpreserveSavedFilters%3A%21t%2CtimeRange%3A%28from%3A%272022-01-13T19%3A00%3A00.000Z%27%2Cto%3A%272022-01-20T19%3A00%3A00.000Z%27%29%2CuseHash%3A%21f%2CviewMode%3Aview%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%29%2CobjectType%3Adashboard%2Ctitle%3A%27%5BeCommerce%5D%20Revenue%20Dashboard%27%2Cversion%3A%278.1.0-SNAPSHOT%27%29
+
+)
 DASHBOARD_PARAMS_PNG=(
   %28browserTimezone%3AUTC%2Clayout%3A%28dimensions%3A%28height%3A2332%2Cwidth%3A3056%29%2Cid%3Apreserve_layout%29%2ClocatorParams%3A%28id%3ADASHBOARD_APP_LOCATOR%2Cparams%3A%28dashboardId%3A%277adfa750-4c81-11e8-b3d7-01146121b73d%27%2CpreserveSavedFilters%3A%21t%2CtimeRange%3A%28from%3A%272022-01-13T22%3A00%3A00.000Z%27%2Cto%3A%272022-01-21T01%3A00%3A00.000Z%27%29%2CuseHash%3A%21f%2CviewMode%3Aview%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%2CobjectType%3Adashboard%2Ctitle%3A%27%5BFlights%5D%20Global%20Flight%20Dashboard%27%2Cversion%3A%278.1.0-SNAPSHOT%27%29
   %28browserTimezone%3AUTC%2Clayout%3A%28dimensions%3A%28height%3A2360%2Cwidth%3A3056%29%2Cid%3Apreserve_layout%29%2ClocatorParams%3A%28id%3ADASHBOARD_APP_LOCATOR%2Cparams%3A%28dashboardId%3Aedf84fe0-e1a0-11e7-b6d5-4dc382ef7f5b%2CpreserveSavedFilters%3A%21t%2CtimeRange%3A%28from%3A%272022-01-13T23%3A00%3A00.000Z%27%2Cto%3A%272022-01-20T23%3A00%3A00.000Z%27%29%2CuseHash%3A%21f%2CviewMode%3Aview%29%2Cversion%3A%278.1.0-SNAPSHOT%27%29%2CobjectType%3Adashboard%2Ctitle%3A%27%5BLogs%5D%20Web%20Traffic%27%2Cversion%3A%278.1.0-SNAPSHOT%27%29
@@ -40,6 +46,18 @@ function dashboardPdfTests1() {
   do 
     PARAM=${DASHBOARD_PARAMS_PDF[$i]}
     TITLE="Dashboard_PDF_Preserve_Test_$i"
+    echo $TITLE $PARAM
+    curl --silent -H "kbn-xsrf: reporting" -XPOST "${TEST_KIBANA_URL}/s/reporting-test-fixtures/api/reporting/generate/printablePdfV2?jobParams=${PARAM}"
+  done
+}
+
+function dashboardPdfTests2() {
+  echo
+  echo Dashboard PDF tests, Print Layout
+  for ((i=0;i<${#DASHBOARD_PARAMS_PDF[@]};i++)); 
+  do 
+    PARAM=${DASHBOARD_PARAMS_PRINT[$i]}
+    TITLE="Dashboard_PDF_Print_Test_$i"
     echo $TITLE $PARAM
     curl --silent -H "kbn-xsrf: reporting" -XPOST "${TEST_KIBANA_URL}/s/reporting-test-fixtures/api/reporting/generate/printablePdfV2?jobParams=${PARAM}"
   done
@@ -85,16 +103,8 @@ function csvTests1() {
 ### Run tests
 ###
 
-dashboardPngTests1
-dashboardPngTests1
-dashboardPngTests1
-dashboardPngTests1
-dashboardPngTests1
-dashboardPngTests1
-dashboardPngTests1
-dashboardPngTests1
-dashboardPngTests1
-dashboardPngTests1
-# dashboardPdfTests1
-# canvasPdfTests1
-# csvTests1
+#dashboardPngTests1
+#dashboardPdfTests1
+dashboardPdfTests2
+#canvasPdfTests1
+#csvTests1
