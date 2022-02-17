@@ -103,8 +103,8 @@ function csvTests1() {
 ### Run tests
 ###
 
-#dashboardPngTests1
-#dashboardPdfTests1
+dashboardPngTests1
+dashboardPdfTests1
 dashboardPdfTests2
-#canvasPdfTests1
-#csvTests1
+canvasPdfTests1
+csvTests1
