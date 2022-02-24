@@ -44,6 +44,10 @@ cluster has the "Monitoring of Reporting" space installed, with a dashboard to v
 After running the setup_kibana script, the Monitoring of Reporting dashboard is accessible from this link: 
 http://localhost:5777/s/reporting-monitoring/app/dashboards#/view/25767be0-8f8f-11ec-a200-0156d462ae71
 
+When the machine has been set up and tests have been run, the Monitoring of Reporting dashboard should look something like this:
+![image](https://user-images.githubusercontent.com/908371/155586625-dbc5f91a-bc26-40ce-b812-f988b93f20e4.png)
+
+
 ## FAQ
 
 - Q: How do I see the Kibana logs?
