@@ -14,7 +14,7 @@ checked out.
 Run `yarn es snapshot` in the Kibana repo on the host machine. Note the snapshot version (is 8.2.0 at the time of this writing).
 
 ### 2: Start the Vagrant machine
-- Edit the Vagrantfile to configure the memory size and number of CPUs.
+- The provided Vagrantfile defines a machine with **8GB RAM**, and **4 CPU**s.
 - Run `VERSION=8.2.0 vagrant up --provision`, matching the version with the ES snapshot instance.
 
 Simply bringing the machine up and provisioning does the following:
