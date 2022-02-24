@@ -47,7 +47,8 @@ http://localhost:5777/s/reporting-monitoring/app/dashboards#/view/25767be0-8f8f-
 When the machine has been set up and tests have been run, the Monitoring of Reporting dashboard should look something like this:
 ![image](https://user-images.githubusercontent.com/908371/155586625-dbc5f91a-bc26-40ce-b812-f988b93f20e4.png)
 
-
+## Cleanup
+When you are done testing, shut down the VM using `vagrant halt` or delete the VM using `vagrant destroy`.
 ## FAQ
 
 - Q: How do I see the Kibana logs?
